@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_discover"
+        android:icon="@drawable/ic_compass"
+        android:title="@string/nav_discover" />
+    <item
+        android:id="@+id/nav_plaza"
+        android:icon="@drawable/ic_grid"
+        android:title="@string/nav_plaza" />
+    <item
+        android:id="@+id/nav_create"
+        android:icon="@drawable/ic_add_circle"
+        android:title="@string/nav_create" />
+    <item
+        android:id="@+id/nav_messages"
+        android:icon="@drawable/ic_bell"
+        android:title="@string/nav_messages" />
+    <item
+        android:id="@+id/nav_profile"
+        android:icon="@drawable/ic_person"
+        android:title="@string/nav_profile" />
+</menu>
