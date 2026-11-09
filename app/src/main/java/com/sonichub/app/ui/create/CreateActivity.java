@@ -19,6 +19,7 @@ import com.sonichub.app.data.Session;
 import com.sonichub.app.data.model.Models;
 import com.sonichub.app.databinding.ActivityCreateBinding;
 import com.sonichub.app.ui.login.LoginActivity;
+import com.sonichub.app.ui.music.MusicCreateActivity;
 import com.sonichub.app.ui.player.PlayerActivity;
 import com.sonichub.app.util.Ui;
 
@@ -66,6 +67,9 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
             else finish();
         });
         binding.nextButton.setOnClickListener(v -> onNext());
+        // 入口：跳到直接对接本地音乐大模型的「AI 写歌」页
+        binding.aiMusicEntry.setOnClickListener(v ->
+                startActivity(new Intent(this, MusicCreateActivity.class)));
         binding.cancelButton.setOnClickListener(v -> {
             if (generationId != null) presenter.cancel(generationId);
         });

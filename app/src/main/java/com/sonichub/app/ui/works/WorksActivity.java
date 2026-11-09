@@ -27,6 +27,7 @@ public class WorksActivity extends AppCompatActivity implements WorksContract.Vi
     private final List<TextView> chips = new ArrayList<>();
     private final String[] labels = {"全部", "已发布", "审核中", "未通过", "草稿"};
     private final String[] values = {"", "published", "pending_review", "rejected", "draft"};
+    private boolean resumedOnce;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,16 @@ public class WorksActivity extends AppCompatActivity implements WorksContract.Vi
         binding.backButton.setOnClickListener(v -> finish());
         buildChips();
         select(0);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // 从创作/发布流程返回时重新拉取，保证新作品立即出现在列表里。
+        if (resumedOnce) {
+            presenter.load(status);
+        }
+        resumedOnce = true;
     }
 
     private void buildChips() {

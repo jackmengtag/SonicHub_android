@@ -11,6 +11,7 @@ import com.sonichub.app.data.ApiClient;
 import com.sonichub.app.data.Navigator;
 import com.sonichub.app.data.Session;
 import com.sonichub.app.databinding.ActivityLoginBinding;
+import com.sonichub.app.ui.music.MusicCreateActivity;
 import com.sonichub.app.util.Ui;
 
 public class LoginActivity extends AppCompatActivity implements LoginContract.View {
@@ -41,6 +42,9 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
             binding.codeInput.setText("1234");
         });
         binding.guestButton.setOnClickListener(v -> Navigator.toMain(this));
+        // 免登录体验：直接进本地音乐大模型的 AI 写歌页
+        binding.aiCreateEntry.setOnClickListener(v ->
+                startActivity(new android.content.Intent(this, MusicCreateActivity.class)));
 
         binding.serverText.setText("服务器：" + displayBaseUrl() + "（点击修改）");
         binding.serverText.setOnClickListener(v -> editServer());

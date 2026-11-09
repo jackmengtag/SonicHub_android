@@ -5,11 +5,15 @@ import com.sonichub.app.data.model.Models;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -101,6 +105,15 @@ public interface ApiService {
 
     @GET("api/v1/me/works")
     Call<Models.ApiResponse<Models.Page<Models.Work>>> myWorks(@Query("status") String status);
+
+    @Multipart
+    @POST("api/v1/works/import")
+    Call<Models.ApiResponse<Models.Work>> importWork(@Part("title") RequestBody title,
+                                                     @Part("genre") RequestBody genre,
+                                                     @Part("tags") RequestBody tags,
+                                                     @Part("duration_seconds") RequestBody duration,
+                                                     @Part("description") RequestBody description,
+                                                     @Part MultipartBody.Part audio);
 
     @GET("api/v1/notifications")
     Call<Models.ApiResponse<Models.NotificationsData>> notifications(@Query("filter") String filter);

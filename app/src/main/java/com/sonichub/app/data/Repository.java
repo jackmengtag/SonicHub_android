@@ -6,6 +6,9 @@ import com.sonichub.app.data.model.Models;
 import java.util.Collections;
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -158,6 +161,22 @@ public final class Repository {
 
     public void myWorks(String status, RepoCallback<Models.Page<Models.Work>> cb) {
         enqueue(ApiClient.api().myWorks(status), cb);
+    }
+
+    /** 把外部音乐引擎生成的音频上传并登记为当前用户的作品。 */
+    public void importWork(String title, String genre, String tags, int duration, String description,
+                           byte[] audio, RepoCallback<Models.Work> cb) {
+        MediaType text = MediaType.parse("text/plain");
+        MediaType wav = MediaType.parse("audio/wav");
+        MultipartBody.Part audioPart = MultipartBody.Part.createFormData("audio", "generated.wav",
+                RequestBody.create(audio == null ? new byte[0] : audio, wav));
+        enqueue(ApiClient.api().importWork(
+                RequestBody.create(title, text),
+                RequestBody.create(genre == null ? "" : genre, text),
+                RequestBody.create(tags == null ? "" : tags, text),
+                RequestBody.create(String.valueOf(duration), text),
+                RequestBody.create(description == null ? "" : description, text),
+                audioPart), cb);
     }
 
     public void notifications(String filter, RepoCallback<Models.NotificationsData> cb) {
