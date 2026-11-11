@@ -347,6 +347,85 @@ public final class Models {
         }
     }
 
+    public static class SmsSendRequest {
+        public String phone;
+
+        public SmsSendRequest(String phone) {
+            this.phone = phone;
+        }
+    }
+
+    public static class SmsSendData {
+        public boolean sent;
+        public boolean demo;
+        @SerializedName("demo_code")
+        public String demoCode;
+        public String message;
+        @SerializedName("biz_id")
+        public String bizId;
+        @SerializedName("interval_seconds")
+        public int intervalSeconds;
+        @SerializedName("valid_seconds")
+        public int validSeconds;
+    }
+
+    public static class OneClickRequest {
+        @SerializedName("access_token")
+        public String accessToken;
+
+        public OneClickRequest(String accessToken) {
+            this.accessToken = accessToken;
+        }
+    }
+
+    /** 短信认证 SDK 换取 BizToken/STS 的请求。 */
+    public static class SmsTokenRequest {
+        @SerializedName("scene_code")
+        public String sceneCode;
+        @SerializedName("package_name")
+        public String packageName;
+        @SerializedName("sign_name")
+        public String signName;
+
+        public SmsTokenRequest(String sceneCode, String packageName, String signName) {
+            this.sceneCode = sceneCode;
+            this.packageName = packageName;
+            this.signName = signName;
+        }
+    }
+
+    public static class SmsTokens {
+        @SerializedName("biz_token")
+        public String bizToken;
+        @SerializedName("expire_time")
+        public long expireTime;
+        @SerializedName("sts_access_key_id")
+        public String stsAccessKeyId;
+        @SerializedName("sts_access_key_secret")
+        public String stsAccessKeySecret;
+        @SerializedName("sts_token")
+        public String stsToken;
+        @SerializedName("scene_code")
+        public String sceneCode;
+        @SerializedName("sms_code_expire")
+        public int smsCodeExpire;
+    }
+
+    /** 短信认证 SDK 发送后，提交验证码完成登录。 */
+    public static class SmsVerifyRequest {
+        public String phone;
+        @SerializedName("sms_code")
+        public String smsCode;
+        @SerializedName("sms_token")
+        public String smsToken;
+
+        public SmsVerifyRequest(String phone, String smsCode, String smsToken) {
+            this.phone = phone;
+            this.smsCode = smsCode;
+            this.smsToken = smsToken;
+        }
+    }
+
     public static class RefreshRequest {
         @SerializedName("refresh_token")
         public String refreshToken;

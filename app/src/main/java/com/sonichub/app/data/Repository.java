@@ -62,6 +62,30 @@ public final class Repository {
         enqueue(ApiClient.api().login(new Models.LoginRequest(phone, code)), cb);
     }
 
+    /** 请求短信验证码（后端未配置阿里云时返回演示验证码）。 */
+    public void sendSms(String phone, RepoCallback<Models.SmsSendData> cb) {
+        enqueue(ApiClient.api().sendSms(new Models.SmsSendRequest(phone)), cb);
+    }
+
+    /** 本机号码一键登录：用号码认证 SDK 返回的 AccessToken 换取手机号并登录。 */
+    public void oneClickLogin(String accessToken, RepoCallback<Models.LoginData> cb) {
+        enqueue(ApiClient.api().oneClickLogin(new Models.OneClickRequest(accessToken)), cb);
+    }
+
+    /** 短信认证 SDK：换取 BizToken/STS 临时凭证。 */
+    public void smsTokens(String sceneCode, String packageName, String signName,
+                          RepoCallback<Models.SmsTokens> cb) {
+        enqueue(ApiClient.api().smsTokens(
+                new Models.SmsTokenRequest(sceneCode, packageName, signName)), cb);
+    }
+
+    /** 短信认证 SDK：提交验证码完成登录。 */
+    public void smsVerify(String phone, String smsCode, String smsToken,
+                          RepoCallback<Models.LoginData> cb) {
+        enqueue(ApiClient.api().smsVerify(
+                new Models.SmsVerifyRequest(phone, smsCode, smsToken)), cb);
+    }
+
     public void me(RepoCallback<Models.MeData> cb) {
         enqueue(ApiClient.api().me(), cb);
     }

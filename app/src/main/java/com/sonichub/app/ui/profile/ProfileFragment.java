@@ -77,6 +77,7 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
 
     @Override
     public void showMe(Models.MeData data) {
+        if (binding == null) return;
         if (data.user != null) {
             binding.name.setText(data.user.displayName);
             binding.bio.setText(data.user.bio == null || data.user.bio.isEmpty()
@@ -98,6 +99,7 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
 
     @Override
     public void showGuest() {
+        if (binding == null) return;
         binding.name.setText("未登录");
         binding.bio.setText("登录后开始写歌、关注音乐人并查看消息");
         binding.stats.setText("0 作品 · 0 粉丝 · 0 朋友");
@@ -108,6 +110,7 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
 
     @Override
     public void showError(String message) {
+        if (!isAdded() || getContext() == null) return;
         Ui.toast(requireContext(), message);
     }
 

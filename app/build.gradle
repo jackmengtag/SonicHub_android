@@ -34,6 +34,8 @@ android {
 }
 
 dependencies {
+    // 阿里云号码认证等厂商 SDK：把下载好的 aar 放进 app/libs 即可自动参与编译
+    implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
     implementation 'androidx.appcompat:appcompat:1.7.0'
     implementation 'com.google.android.material:material:1.12.0'
     implementation 'androidx.recyclerview:recyclerview:1.3.2'

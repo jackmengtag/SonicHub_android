@@ -21,6 +21,18 @@ public interface ApiService {
     @POST("api/v1/auth/login")
     Call<Models.ApiResponse<Models.LoginData>> login(@Body Models.LoginRequest body);
 
+    @POST("api/v1/auth/sms/send")
+    Call<Models.ApiResponse<Models.SmsSendData>> sendSms(@Body Models.SmsSendRequest body);
+
+    @POST("api/v1/auth/one-click/login")
+    Call<Models.ApiResponse<Models.LoginData>> oneClickLogin(@Body Models.OneClickRequest body);
+
+    @POST("api/v1/auth/sms/tokens")
+    Call<Models.ApiResponse<Models.SmsTokens>> smsTokens(@Body Models.SmsTokenRequest body);
+
+    @POST("api/v1/auth/sms/verify")
+    Call<Models.ApiResponse<Models.LoginData>> smsVerify(@Body Models.SmsVerifyRequest body);
+
     @POST("api/v1/auth/refresh")
     Call<Models.ApiResponse<Models.LoginData>> refresh(@Body Models.RefreshRequest body);
 
