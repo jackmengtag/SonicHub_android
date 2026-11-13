@@ -157,6 +157,29 @@ public final class Repository {
         enqueue(ApiClient.api().generation(id), cb);
     }
 
+    /** 手机端 AI 写词（后端内部再调用音乐大模型）。 */
+    public void mobileLyrics(String theme, String genre, String mood, int bpm,
+                             RepoCallback<Models.MobileLyrics> cb) {
+        enqueue(ApiClient.api().mobileLyrics(
+                new Models.MobileLyricsRequest(theme, genre, mood, bpm)), cb);
+    }
+
+    /** 手机端一步生成音乐：报价 + 冻结积分 + 入队，返回 generation_id 供轮询。 */
+    public void mobileMusic(String prompt, String lyrics, String genre, String mood, int duration,
+                            String vocal, String title, RepoCallback<Models.MobileMusicData> cb) {
+        Models.MobileMusicRequest body = new Models.MobileMusicRequest();
+        body.prompt = prompt;
+        body.lyrics = lyrics;
+        body.genre = genre;
+        body.mood = mood;
+        body.durationSeconds = duration;
+        body.vocal = vocal;
+        body.title = title;
+        body.visibility = "private";
+        body.autoPublish = false;
+        enqueue(ApiClient.api().mobileMusic(body), cb);
+    }
+
     public void cancelGeneration(String id, RepoCallback<Models.Generation> cb) {
         enqueue(ApiClient.api().cancelGeneration(id), cb);
     }

@@ -38,7 +38,7 @@
             android:layout_width="40dp"
             android:layout_height="wrap_content"
             android:gravity="end"
-            android:text="本地"
+            android:text="云端"
             android:textColor="@color/text_3"
             android:textSize="10sp" />
     </LinearLayout>
@@ -64,7 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="6dp"
-                android:text="引擎：10.0.2.2:8001（点击修改）"
+                android:text="服务：119.91.65.225:8080（点击修改）"
                 android:textColor="@color/text_3"
                 android:textSize="9.5sp" />
 
@@ -109,7 +109,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/bg_input"
                 android:gravity="top|start"
-                android:hint="点「AI 写词」由本地大模型生成，也可以自己写整首歌词…"
+                android:hint="点「AI 写词」由后端生成，也可以自己写整首歌词…"
                 android:padding="14dp"
                 android:textColor="@color/text"
                 android:textColorHint="@color/text_3"

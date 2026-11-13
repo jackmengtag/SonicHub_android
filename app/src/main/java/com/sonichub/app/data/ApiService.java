@@ -94,6 +94,12 @@ public interface ApiService {
     @POST("api/v1/generations")
     Call<Models.ApiResponse<Models.Generation>> generate(@Body Models.GenerateRequest body);
 
+    @POST("api/v1/mobile/lyrics")
+    Call<Models.ApiResponse<Models.MobileLyrics>> mobileLyrics(@Body Models.MobileLyricsRequest body);
+
+    @POST("api/v1/mobile/music")
+    Call<Models.ApiResponse<Models.MobileMusicData>> mobileMusic(@Body Models.MobileMusicRequest body);
+
     @GET("api/v1/generations/{id}")
     Call<Models.ApiResponse<Models.Generation>> generation(@Path("id") String id);
 

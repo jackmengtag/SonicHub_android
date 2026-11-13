@@ -539,4 +539,50 @@ public final class Models {
             this.genres = genres;
         }
     }
+
+    /** 手机端 AI 写词请求：POST /api/v1/mobile/lyrics。 */
+    public static class MobileLyricsRequest {
+        public String theme;
+        public String genre;
+        public String mood;
+        public int bpm;
+
+        public MobileLyricsRequest(String theme, String genre, String mood, int bpm) {
+            this.theme = theme;
+            this.genre = genre;
+            this.mood = mood;
+            this.bpm = bpm;
+        }
+    }
+
+    public static class MobileLyrics {
+        public String lyrics;
+        public String genre;
+        public String mood;
+        public int bpm;
+    }
+
+    /** 手机端一步生成音乐：POST /api/v1/mobile/music。 */
+    public static class MobileMusicRequest {
+        public String prompt;
+        public String lyrics;
+        public String genre;
+        public String mood;
+        @SerializedName("duration_seconds")
+        public int durationSeconds;
+        public String vocal;
+        public String title;
+        public String visibility;
+        @SerializedName("auto_publish")
+        public boolean autoPublish;
+    }
+
+    public static class MobileMusicData {
+        @SerializedName("generation_id")
+        public String generationId;
+        public String status;
+        public int credits;
+        @SerializedName("poll_url")
+        public String pollUrl;
+    }
 }
