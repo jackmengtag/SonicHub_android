@@ -13,10 +13,10 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="320dp"
             android:background="@drawable/bg_login_art"
             android:paddingStart="26dp"
-            android:paddingTop="64dp"
+            android:paddingTop="56dp"
             android:paddingEnd="26dp"
             android:paddingBottom="34dp">
 
@@ -27,13 +27,13 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="52dp"
-                    android:layout_height="52dp"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
                     android:background="@drawable/bg_logo"
                     android:gravity="center"
                     android:text="S"
                     android:textColor="@color/bg"
-                    android:textSize="26sp"
+                    android:textSize="28sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -41,10 +41,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
                     android:fontFamily="sans-serif-medium"
-                    android:letterSpacing="-0.04"
+                    android:letterSpacing="-0.03"
                     android:text="SonicHub"
                     android:textColor="@color/text"
-                    android:textSize="38sp"
+                    android:textSize="40sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -177,7 +177,7 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/loginButton"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="50dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/bg_button_primary"
                 android:fontFamily="sans-serif-medium"
@@ -237,11 +237,16 @@
                 android:id="@+id/serverText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:padding="6dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_chip"
+                android:gravity="center"
+                android:paddingStart="10dp"
+                android:paddingTop="7dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="7dp"
                 android:text="服务器：10.0.2.2:8080（点击修改）"
                 android:textColor="@color/text_3"
-                android:textSize="9.5sp" />
+                android:textSize="10sp" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

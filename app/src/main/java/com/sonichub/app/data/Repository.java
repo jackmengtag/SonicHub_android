@@ -198,14 +198,6 @@ public final class Repository {
         enqueue(ApiClient.api().ledger(), cb);
     }
 
-    public void packages(RepoCallback<Models.PackagesData> cb) {
-        enqueue(ApiClient.api().packages(), cb);
-    }
-
-    public void recharge(String packageId, RepoCallback<Models.CreditAccount> cb) {
-        enqueue(ApiClient.api().recharge(new Models.RechargeRequest(packageId)), cb);
-    }
-
     public void myWorks(String status, RepoCallback<Models.Page<Models.Work>> cb) {
         enqueue(ApiClient.api().myWorks(status), cb);
     }

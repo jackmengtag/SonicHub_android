@@ -115,12 +115,6 @@ public interface ApiService {
     @GET("api/v1/me/credits/ledger")
     Call<Models.ApiResponse<Models.LedgerData>> ledger();
 
-    @GET("api/v1/credit/packages")
-    Call<Models.ApiResponse<Models.PackagesData>> packages();
-
-    @POST("api/v1/credit/recharge")
-    Call<Models.ApiResponse<Models.CreditAccount>> recharge(@Body Models.RechargeRequest body);
-
     @GET("api/v1/me/works")
     Call<Models.ApiResponse<Models.Page<Models.Work>>> myWorks(@Query("status") String status);
 

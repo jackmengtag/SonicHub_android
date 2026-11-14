@@ -227,14 +227,6 @@ public final class Models {
         public String title;
     }
 
-    public static class PackageItem {
-        public String id;
-        public int credits;
-        @SerializedName("price_cents")
-        public int priceCents;
-        public String tag;
-    }
-
     public static class LedgerEntry {
         public String id;
         @SerializedName("entry_type")
@@ -299,10 +291,6 @@ public final class Models {
 
     public static class CommentsData {
         public List<Comment> items;
-    }
-
-    public static class PackagesData {
-        public List<PackageItem> items;
     }
 
     public static class LedgerData {
@@ -515,15 +503,6 @@ public final class Models {
             this.type = type;
             this.text = text;
             this.workId = workId;
-        }
-    }
-
-    public static class RechargeRequest {
-        @SerializedName("package_id")
-        public String packageId;
-
-        public RechargeRequest(String packageId) {
-            this.packageId = packageId;
         }
     }
 

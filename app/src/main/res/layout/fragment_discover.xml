@@ -42,9 +42,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
+                    android:letterSpacing="-0.02"
                     android:text="晚上好"
                     android:textColor="@color/text"
-                    android:textSize="26sp"
+                    android:textSize="28sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -67,8 +68,8 @@
         <LinearLayout
             android:id="@+id/searchBar"
             android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:layout_marginTop="14dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/bg_input"
             android:gravity="center_vertical"
             android:orientation="horizontal"
@@ -126,16 +127,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="18dp"
             android:background="@drawable/bg_hero"
             android:orientation="vertical"
-            android:padding="20dp">
+            android:padding="22dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="monospace"
-                android:letterSpacing="0.12"
+                android:letterSpacing="0.14"
                 android:text="SONIC LAB · 今日灵感"
                 android:textColor="@color/accent"
                 android:textSize="9sp" />
@@ -143,17 +144,18 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="9dp"
+                android:letterSpacing="-0.02"
                 android:lineSpacingExtra="2dp"
                 android:text="把此刻的心情\n写成一首歌"
                 android:textColor="@color/text"
-                android:textSize="25sp"
+                android:textSize="26sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="7dp"
                 android:text="30 秒生成 · 可发布 · 可分享"
                 android:textColor="@color/text_2"
                 android:textSize="11sp" />
@@ -161,8 +163,8 @@
             <LinearLayout
                 android:id="@+id/heroWave"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="12dp"
+                android:layout_height="44dp"
+                android:layout_marginTop="14dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal" />
 
@@ -170,8 +172,8 @@
                 android:id="@+id/createButton"
                 style="@style/Widget.Button.Primary"
                 android:layout_width="match_parent"
-                android:layout_height="46dp"
-                android:layout_marginTop="10dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="14dp"
                 android:text="开始写歌" />
         </LinearLayout>
 
@@ -186,26 +188,31 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:letterSpacing="-0.01"
                 android:text="为你推荐"
                 android:textColor="@color/text"
-                android:textSize="15sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/refreshButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="6dp"
+                android:background="@drawable/bg_chip"
+                android:paddingStart="12dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="5dp"
                 android:text="换一批"
                 android:textColor="@color/text_2"
-                android:textSize="12sp" />
+                android:textSize="11sp" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/feedList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
             android:nestedScrollingEnabled="false" />
 
         <LinearLayout
@@ -219,19 +226,24 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:letterSpacing="-0.01"
                 android:text="你可能感兴趣的音乐人"
                 android:textColor="@color/text"
-                android:textSize="15sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/allArtists"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="6dp"
+                android:background="@drawable/bg_chip"
+                android:paddingStart="12dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="5dp"
                 android:text="全部"
                 android:textColor="@color/text_2"
-                android:textSize="12sp" />
+                android:textSize="11sp" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView

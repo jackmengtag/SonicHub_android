@@ -4,16 +4,16 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/selectableItemBackground"
+    android:layout_marginBottom="8dp"
+    android:background="@drawable/bg_card_clickable"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp">
+    android:padding="12dp">
 
     <com.sonichub.app.widget.CoverView
         android:id="@+id/cover"
-        android:layout_width="54dp"
-        android:layout_height="54dp" />
+        android:layout_width="56dp"
+        android:layout_height="56dp" />
 
     <LinearLayout
         android:layout_width="0dp"

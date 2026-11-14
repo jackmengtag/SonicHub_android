@@ -3,9 +3,10 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/selectableItemBackground"
+    android:layout_margin="5dp"
+    android:background="@drawable/bg_card_clickable"
     android:orientation="vertical"
-    android:padding="6dp">
+    android:padding="9dp">
 
     <com.sonichub.app.widget.CoverView
         android:id="@+id/cover"
@@ -16,11 +17,11 @@
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="9dp"
         android:ellipsize="end"
         android:maxLines="1"
         android:textColor="@color/text"
-        android:textSize="12.5sp"
+        android:textSize="13sp"
         android:textStyle="bold" />
 
     <TextView

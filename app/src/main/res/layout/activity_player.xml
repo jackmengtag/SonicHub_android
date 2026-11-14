@@ -27,10 +27,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:fontFamily="monospace"
             android:gravity="center"
+            android:letterSpacing="0.14"
             android:text="正在播放"
-            android:textColor="@color/text_2"
-            android:textSize="11sp" />
+            android:textColor="@color/text_3"
+            android:textSize="9sp" />
 
         <ImageButton
             android:id="@+id/shareButton"
@@ -44,20 +46,22 @@
 
     <com.sonichub.app.widget.CoverView
         android:id="@+id/cover"
-        android:layout_width="240dp"
-        android:layout_height="240dp"
+        android:layout_width="260dp"
+        android:layout_height="260dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="14dp" />
+        android:layout_marginTop="14dp"
+        android:elevation="18dp" />
 
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="22dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
+        android:letterSpacing="-0.02"
         android:textColor="@color/text"
-        android:textSize="22sp"
+        android:textSize="24sp"
         android:textStyle="bold" />
 
     <LinearLayout
@@ -97,9 +101,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="14dp"
         android:layout_marginEnd="24dp"
+        android:paddingStart="0dp"
+        android:paddingEnd="0dp"
+        android:progressBackgroundTint="@color/line_strong"
         android:progressTint="@color/accent"
+        android:splitTrack="false"
         android:thumbTint="@color/accent" />
 
     <LinearLayout
@@ -132,16 +140,17 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="16dp"
         android:gravity="center"
         android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/playButton"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
+            android:layout_width="68dp"
+            android:layout_height="68dp"
             android:background="@drawable/bg_logo"
             android:contentDescription="播放"
+            android:elevation="10dp"
             android:src="@drawable/ic_play"
             app:tint="@color/bg" />
     </LinearLayout>
