@@ -10,7 +10,12 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.TypedValue;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -24,8 +29,11 @@ import com.sonichub.app.databinding.SheetCommentsBinding;
 import com.sonichub.app.ui.artist.ArtistActivity;
 import com.sonichub.app.util.Ui;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class PlayerActivity extends AppCompatActivity implements PlayerContract.View {
     public static final String EXTRA_WORK_ID = "work_id";
@@ -36,6 +44,16 @@ public class PlayerActivity extends AppCompatActivity implements PlayerContract.
     private Models.Work current;
     private MediaPlayer player;
     private final Handler handler = new Handler(Looper.getMainLooper());
+    private static final Pattern LRC_TAG =
+            Pattern.compile("^(\\d{1,3}):(\\d{1,2})(?:[.:](\\d{1,3}))?$");
+
+    private final List<String> lyricTexts = new ArrayList<>();
+    private final List<Integer> lyricWeights = new ArrayList<>();
+    private final List<Integer> lyricStarts = new ArrayList<>();
+    private final List<TextView> lyricViews = new ArrayList<>();
+    private boolean lyricsTimed;
+    private int activeLyric = -1;
+
     private final Runnable ticker = new Runnable() {
         @Override
         public void run() {
@@ -44,6 +62,7 @@ public class PlayerActivity extends AppCompatActivity implements PlayerContract.
                     int pos = player.getCurrentPosition();
                     binding.seekBar.setProgress(pos);
                     binding.currentTime.setText(format(pos));
+                    syncLyric(pos);
                 } catch (Exception ignored) {
                 }
             }
@@ -84,7 +103,10 @@ public class PlayerActivity extends AppCompatActivity implements PlayerContract.
         binding.seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (fromUser && player != null) player.seekTo(progress);
+                if (fromUser && player != null) {
+                    player.seekTo(progress);
+                    syncLyric(progress);
+                }
             }
 
             @Override
@@ -114,6 +136,8 @@ public class PlayerActivity extends AppCompatActivity implements PlayerContract.
             player.pause();
         } else {
             player.start();
+            handler.removeCallbacks(ticker);
+            handler.post(ticker);
         }
         updatePlayIcon();
     }
@@ -135,6 +159,7 @@ public class PlayerActivity extends AppCompatActivity implements PlayerContract.
             player.setOnPreparedListener(mp -> {
                 binding.seekBar.setMax(mp.getDuration());
                 binding.totalTime.setText(format(mp.getDuration()));
+                applyTimeline(mp.getDuration());
                 mp.start();
                 updatePlayIcon();
                 handler.removeCallbacks(ticker);
@@ -144,6 +169,9 @@ public class PlayerActivity extends AppCompatActivity implements PlayerContract.
                 updatePlayIcon();
                 binding.seekBar.setProgress(0);
                 binding.currentTime.setText("00:00");
+                handler.removeCallbacks(ticker);
+                mp.seekTo(0);
+                resetLyric();
             });
             player.prepareAsync();
         } catch (Exception e) {
@@ -182,6 +210,7 @@ public class PlayerActivity extends AppCompatActivity implements PlayerContract.
         binding.commentCount.setText(work.commentCount + "");
         updateLike(work);
         updateCollect(work);
+        setupLyrics(work);
         prepareAudio(work);
     }
 
@@ -208,6 +237,146 @@ public class PlayerActivity extends AppCompatActivity implements PlayerContract.
     private void updateCollect(Models.Work work) {
         int color = ContextCompat.getColor(this, work.collected ? R.color.mint : R.color.text_3);
         binding.collectIcon.setImageTintList(ColorStateList.valueOf(color));
+    }
+
+    // ── 歌词：解析、时间轴与逐行高亮 ──
+
+    private void setupLyrics(Models.Work work) {
+        binding.lyricsBox.removeAllViews();
+        lyricTexts.clear();
+        lyricWeights.clear();
+        lyricStarts.clear();
+        lyricViews.clear();
+        activeLyric = -1;
+        lyricsTimed = false;
+
+        String raw = work.lyrics == null ? "" : work.lyrics;
+        for (String rawLine : raw.replace("\r", "").split("\n")) {
+            String text = rawLine.trim();
+            if (text.isEmpty()) continue;
+            int startMs = -1;
+            // 行首的 [mm:ss.xx] 时间戳与 [Verse]/[副歌] 等段落标签一并剥离
+            while (text.startsWith("[")) {
+                int close = text.indexOf(']');
+                if (close <= 0) break;
+                Matcher m = LRC_TAG.matcher(text.substring(1, close));
+                if (m.matches() && startMs < 0) startMs = lrcMillis(m);
+                text = text.substring(close + 1).trim();
+            }
+            if (text.startsWith("【")) {
+                int close = text.indexOf('】');
+                if (close > 0) text = text.substring(close + 1).trim();
+            }
+            if (text.isEmpty()) continue;
+            lyricTexts.add(text);
+            lyricWeights.add(lyricWeight(text));
+            lyricStarts.add(startMs);
+            if (startMs >= 0) lyricsTimed = true;
+        }
+
+        if (lyricTexts.isEmpty()) {
+            binding.lyricsScroll.setVisibility(View.GONE);
+            binding.lyricsEmpty.setVisibility(View.VISIBLE);
+            return;
+        }
+        binding.lyricsScroll.setVisibility(View.VISIBLE);
+        binding.lyricsEmpty.setVisibility(View.GONE);
+
+        int padH = dp(8);
+        for (String text : lyricTexts) {
+            TextView line = new TextView(this);
+            line.setText(text);
+            line.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+            line.setTextColor(ContextCompat.getColor(this, R.color.text_3));
+            line.setAlpha(0.55f);
+            line.setGravity(Gravity.CENTER);
+            line.setLineSpacing(dp(3), 1f);
+            line.setPadding(padH, dp(7), padH, dp(7));
+            binding.lyricsBox.addView(line, new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT));
+            lyricViews.add(line);
+        }
+
+        applyTimeline(work.duration > 0 ? work.duration * 1000 : 30000);
+        binding.lyricsScroll.post(() -> {
+            int half = binding.lyricsScroll.getHeight() / 2;
+            if (half > 0) binding.lyricsBox.setPadding(0, half, 0, half);
+        });
+    }
+
+    /** LRC 有时间戳时直接使用；否则按每行字数在歌曲时长内分摊，贴合逐句演唱的节奏。 */
+    private void applyTimeline(int durationMs) {
+        if (lyricTexts.isEmpty() || lyricsTimed) return;
+        int total = 0;
+        for (int weight : lyricWeights) total += weight;
+        if (total <= 0) return;
+        int duration = Math.max(durationMs, 5000);
+        int head = (int) (duration * 0.08);
+        int span = Math.max((int) (duration * 0.95) - head, 1000);
+        lyricStarts.clear();
+        int acc = 0;
+        for (int weight : lyricWeights) {
+            lyricStarts.add(head + (int) ((long) span * acc / total));
+            acc += weight;
+        }
+    }
+
+    private void syncLyric(int positionMs) {
+        if (lyricStarts.isEmpty() || lyricStarts.size() != lyricViews.size()) return;
+        int index = -1;
+        for (int i = 0; i < lyricStarts.size(); i++) {
+            if (positionMs >= lyricStarts.get(i)) index = i;
+            else break;
+        }
+        if (index == activeLyric) return;
+        if (activeLyric >= 0 && activeLyric < lyricViews.size()) {
+            TextView old = lyricViews.get(activeLyric);
+            old.setTextColor(ContextCompat.getColor(this, R.color.text_3));
+            old.setAlpha(0.55f);
+        }
+        activeLyric = index;
+        if (index < 0) return;
+        TextView line = lyricViews.get(index);
+        line.setTextColor(ContextCompat.getColor(this, R.color.accent));
+        line.setAlpha(1f);
+        int offset = binding.lyricsScroll.getHeight() / 2 - line.getHeight() / 2;
+        binding.lyricsScroll.smoothScrollTo(0, Math.max(line.getTop() - offset, 0));
+    }
+
+    private void resetLyric() {
+        if (activeLyric >= 0 && activeLyric < lyricViews.size()) {
+            TextView line = lyricViews.get(activeLyric);
+            line.setTextColor(ContextCompat.getColor(this, R.color.text_3));
+            line.setAlpha(0.55f);
+        }
+        activeLyric = -1;
+        binding.lyricsScroll.smoothScrollTo(0, 0);
+    }
+
+    private static int lrcMillis(Matcher m) {
+        int minutes = Integer.parseInt(m.group(1));
+        int seconds = Integer.parseInt(m.group(2));
+        int millis = 0;
+        String frac = m.group(3);
+        if (frac != null) {
+            millis = Integer.parseInt(frac);
+            if (frac.length() == 2) millis *= 10;
+            else if (frac.length() == 1) millis *= 100;
+        }
+        return (minutes * 60 + seconds) * 1000 + millis;
+    }
+
+    private static int lyricWeight(String text) {
+        int count = 0;
+        for (int i = 0; i < text.length(); i++) {
+            if (Character.isLetterOrDigit(text.charAt(i))) count++;
+        }
+        return Math.max(4, count);
+    }
+
+    private int dp(int value) {
+        return Math.round(value * getResources().getDisplayMetrics().density);
     }
 
     private void openComments() {

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.widget.Toast;
 
-import com.sonichub.app.BuildConfig;
+import com.sonichub.app.data.Session;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -39,7 +39,7 @@ public final class Ui {
     public static String mediaUrl(String path) {
         if (path == null || path.isEmpty()) return "";
         if (path.startsWith("http://") || path.startsWith("https://")) return path;
-        String base = BuildConfig.API_BASE_URL;
+        String base = Session.baseUrl();
         if (base.endsWith("/")) base = base.substring(0, base.length() - 1);
         if (!path.startsWith("/")) path = "/" + path;
         return base + path;

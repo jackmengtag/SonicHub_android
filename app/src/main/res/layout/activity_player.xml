@@ -8,7 +8,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="52dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingStart="8dp"
@@ -44,64 +44,117 @@
             app:tint="@color/text" />
     </LinearLayout>
 
-    <com.sonichub.app.widget.CoverView
-        android:id="@+id/cover"
-        android:layout_width="260dp"
-        android:layout_height="260dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="14dp"
-        android:elevation="18dp" />
-
-    <TextView
-        android:id="@+id/title"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="24dp"
-        android:letterSpacing="-0.02"
-        android:textColor="@color/text"
-        android:textSize="24sp"
-        android:textStyle="bold" />
-
-    <LinearLayout
-        android:id="@+id/artistRow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="4dp">
+        android:orientation="horizontal">
 
         <com.sonichub.app.widget.CoverView
-            android:id="@+id/artistAvatar"
-            android:layout_width="26dp"
-            android:layout_height="26dp" />
+            android:id="@+id/cover"
+            android:layout_width="68dp"
+            android:layout_height="68dp"
+            android:elevation="10dp" />
 
-        <TextView
-            android:id="@+id/artistName"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:textColor="@color/text_2"
-            android:textSize="12sp" />
+            android:layout_marginStart="14dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="查看主页"
-            android:textColor="@color/accent"
-            android:textSize="10sp" />
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:letterSpacing="-0.02"
+                android:maxLines="1"
+                android:textColor="@color/text"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/artistRow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp">
+
+                <com.sonichub.app.widget.CoverView
+                    android:id="@+id/artistAvatar"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp" />
+
+                <TextView
+                    android:id="@+id/artistName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:textColor="@color/text_2"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="查看主页"
+                    android:textColor="@color/accent"
+                    android:textSize="10sp" />
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="6dp"
+        android:layout_weight="1"
+        android:paddingStart="18dp"
+        android:paddingEnd="18dp">
+
+        <ScrollView
+            android:id="@+id/lyricsScroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:fadeScrollbars="false"
+            android:overScrollMode="never"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/lyricsBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingTop="32dp"
+                android:paddingBottom="32dp" />
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/lyricsEmpty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="暂无歌词"
+            android:textColor="@color/text_3"
+            android:textSize="12sp"
+            android:visibility="gone" />
+    </FrameLayout>
 
     <SeekBar
         android:id="@+id/seekBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="24dp"
         android:paddingStart="0dp"
         android:paddingEnd="0dp"
@@ -140,14 +193,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:gravity="center"
         android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/playButton"
-            android:layout_width="68dp"
-            android:layout_height="68dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:background="@drawable/bg_logo"
             android:contentDescription="播放"
             android:elevation="10dp"
@@ -158,9 +211,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="8dp"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingBottom="4dp">
 
         <LinearLayout
             android:id="@+id/likeButton"
@@ -168,13 +222,13 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:padding="6dp">
 
             <ImageView
                 android:id="@+id/likeIcon"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:src="@drawable/ic_heart"
                 app:tint="@color/text_3" />
 
@@ -182,7 +236,7 @@
                 android:id="@+id/likeCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginStart="5dp"
                 android:textColor="@color/text_3"
                 android:textSize="9sp" />
         </LinearLayout>
@@ -193,12 +247,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:padding="6dp">
 
             <ImageView
-                android:layout_width="22dp"
-                android:layout_height="22dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:src="@drawable/ic_comment"
                 app:tint="@color/text_3" />
 
@@ -206,7 +260,7 @@
                 android:id="@+id/commentCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginStart="5dp"
                 android:textColor="@color/text_3"
                 android:textSize="9sp" />
         </LinearLayout>
@@ -217,20 +271,20 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:padding="6dp">
 
             <ImageView
                 android:id="@+id/collectIcon"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:src="@drawable/ic_star"
                 app:tint="@color/text_3" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginStart="5dp"
                 android:text="收藏"
                 android:textColor="@color/text_3"
                 android:textSize="9sp" />

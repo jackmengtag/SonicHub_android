@@ -111,6 +111,7 @@ public final class Models {
         public String publishedAt;
         @SerializedName("created_at")
         public String createdAt;
+        public String lyrics;
 
         public String tagsText() {
             if (tags == null || tags.isEmpty()) return "";
