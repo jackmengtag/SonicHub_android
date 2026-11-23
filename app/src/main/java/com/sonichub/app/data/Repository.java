@@ -106,6 +106,10 @@ public final class Repository {
         enqueue(ApiClient.api().search(query), cb);
     }
 
+    public void genres(RepoCallback<Models.GenreData> cb) {
+        enqueue(ApiClient.api().genres(), cb);
+    }
+
     public void work(String id, RepoCallback<Models.Work> cb) {
         enqueue(ApiClient.api().work(id), cb);
     }

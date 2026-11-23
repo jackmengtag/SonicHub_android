@@ -52,6 +52,9 @@ public interface ApiService {
     @GET("api/v1/search")
     Call<Models.ApiResponse<Models.SearchData>> search(@Query("q") String query);
 
+    @GET("api/v1/genres")
+    Call<Models.ApiResponse<Models.GenreData>> genres();
+
     @GET("api/v1/works/{id}")
     Call<Models.ApiResponse<Models.Work>> work(@Path("id") String id);
 

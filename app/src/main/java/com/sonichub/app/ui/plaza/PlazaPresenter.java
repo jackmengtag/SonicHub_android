@@ -5,12 +5,11 @@ import com.sonichub.app.data.Repository;
 import com.sonichub.app.data.model.Models;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class PlazaPresenter implements PlazaContract.Presenter {
     private final PlazaContract.View view;
     private final Repository repository;
-    private boolean loading;
+    private int requestSeq;
 
     public PlazaPresenter(PlazaContract.View view) {
         this.view = view;
@@ -19,19 +18,33 @@ public class PlazaPresenter implements PlazaContract.Presenter {
 
     @Override
     public void load(String sort, String genre) {
-        if (loading) return;
-        loading = true;
+        final int seq = ++requestSeq;
         repository.plaza(sort, genre, 30, 0, new RepoCallback<Models.Page<Models.Work>>() {
             @Override
             public void onSuccess(Models.Page<Models.Work> data) {
-                loading = false;
+                if (seq != requestSeq) return;
                 view.showWorks(data.items == null ? new ArrayList<>() : data.items);
             }
 
             @Override
             public void onError(String message) {
-                loading = false;
+                if (seq != requestSeq) return;
                 view.showError(message);
+            }
+        });
+    }
+
+    @Override
+    public void loadGenres() {
+        repository.genres(new RepoCallback<Models.GenreData>() {
+            @Override
+            public void onSuccess(Models.GenreData data) {
+                view.showGenres(data.items == null ? new ArrayList<>() : data.items);
+            }
+
+            @Override
+            public void onError(String message) {
+                view.showGenres(new ArrayList<>());
             }
         });
     }

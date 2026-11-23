@@ -298,6 +298,10 @@ public final class Models {
         public List<LedgerEntry> items;
     }
 
+    public static class GenreData {
+        public List<String> items;
+    }
+
     public static class SearchData {
         public List<Work> works;
         public List<UserCard> artists;

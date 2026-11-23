@@ -8,10 +8,14 @@ public interface PlazaContract {
     interface View {
         void showWorks(List<Models.Work> works);
 
+        void showGenres(List<String> genres);
+
         void showError(String message);
     }
 
     interface Presenter {
         void load(String sort, String genre);
+
+        void loadGenres();
     }
 }
